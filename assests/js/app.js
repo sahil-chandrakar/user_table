@@ -204,6 +204,11 @@ const users = [
 const filterByName = document.querySelector("#filterByName");
 const filterByGender = document.querySelector("#filterByGender");
 const filterByCgpa = document.querySelector("#filterByCgpa");
+const prevBtn = document.querySelector("#prevBtn");
+const nextBtn = document.querySelector("#nextBtn");
+
+let currentPage = 1;
+const recordsPerPage = 5;
 
 const useFilter = () => {
   let result = [...users];
@@ -236,15 +241,52 @@ const useFilter = () => {
   } else if (cgpaValue == "desc") {
     result.sort((a, b) => b.CGPA - a.CGPA);
   }
-  displayData(result);
+
+  //creating pagination
+  const totalPages = Math.ceil(result.length / recordsPerPage);
+
+  if (currentPage > totalPages) {
+    currentPage = 1;
+  }
+
+  const start = (currentPage - 1) * recordsPerPage;
+  const end = currentPage * recordsPerPage;
+  const paginatedResult = result.slice(start, end);
+
+  //creating a function for text between prev - next
+  let textData = document.querySelector("#textData");
+  textData.innerHTML = `Page ${currentPage} of ${totalPages}`;
+
+  displayData(paginatedResult);
+  updateButtons(totalPages);
+
+  //   displayData(result);
 };
+
+//disabling buttons
+const updateButtons = (totalPages) => {
+  prevBtn.disabled = currentPage === 1;
+  nextBtn.disabled = currentPage === totalPages;
+};
+
+//next and previous button
+prevBtn.addEventListener("click", () => {
+  if (currentPage > 1) {
+    currentPage--;
+    useFilter();
+  }
+});
+nextBtn.addEventListener("click", () => {
+  currentPage++;
+  useFilter();
+});
 
 //display the user data in table
 const displayData = (list) => {
   const tbody = document.querySelector("#tbody");
   tbody.innerHTML = "";
 
-  list.map((user, index) => {
+  list.forEach((user, index) => {
     //we have to add the elements instead of assigning directly (#learning 1)
     tbody.innerHTML += `
         <tr>
@@ -264,4 +306,5 @@ const displayData = (list) => {
 filterByName.addEventListener("input", useFilter);
 filterByGender.addEventListener("change", useFilter);
 filterByCgpa.addEventListener("change", useFilter);
-displayData(users);
+
+useFilter();
