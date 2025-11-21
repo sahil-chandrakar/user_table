@@ -201,43 +201,43 @@ const users = [
   },
 ];
 
-//filter the data by cgpa
+const filterByName = document.querySelector("#filterByName");
+const filterByGender = document.querySelector("#filterByGender");
 const filterByCgpa = document.querySelector("#filterByCgpa");
 
-filterByCgpa.addEventListener("change", (e) => {
-  console.log(e.target.value);
-  if (e.target.value == "asc") {
-    users.sort((a, b) => a.CGPA - b.CGPA);
-    displayData(users);
-  } else {
-    users.sort((a, b) => b.CGPA - a.CGPA);
-    displayData(users);
+const useFilter = () => {
+  let result = [...users];
+
+  //filter the data by name
+  const nameValue = filterByName.value.toLowerCase();
+  if (nameValue) {
+    result = result.filter((user) =>
+      user.Name.toLowerCase().includes(nameValue)
+    );
   }
-});
 
-//filter the data by gender
-const filterByGender = document.querySelector("#filterByGender");
-
-filterByGender.addEventListener("change", (e) => {
-  let userInput = e.target.value;
-  if (userInput == "male") {
-    const result = users.filter((value) => value.Gender === "Male");
-    displayData(result);
-  } else {
-    const result = users.filter((value) => value.Gender === "Female");
-    displayData(result);
+  //filter by gender
+  const genderValue = filterByGender.value;
+  //   if (genderValue === "all") {
+  //     result = result;
+  //   } else if (genderValue == "male") {
+  //     result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
+  //   } else {
+  //     result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
+  //   }
+  if (genderValue !== "all") {
+    result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
   }
-});
 
-//filter the data using name
-const filterByName = document.querySelector("#filterByName");
-filterByName.addEventListener("input", (e) => {
-  const userInput = e.target.value.toLowerCase();
-  const result = users.filter((user) =>
-    user.Name.toLowerCase().includes(userInput)
-  );
+  //filter the data by cgpa
+  const cgpaValue = filterByCgpa.value;
+  if (cgpaValue == "asc") {
+    result.sort((a, b) => a.CGPA - b.CGPA);
+  } else if (cgpaValue == "desc") {
+    result.sort((a, b) => b.CGPA - a.CGPA);
+  }
   displayData(result);
-});
+};
 
 //display the user data in table
 const displayData = (list) => {
@@ -260,4 +260,8 @@ const displayData = (list) => {
     `;
   });
 };
+
+filterByName.addEventListener("input", useFilter);
+filterByGender.addEventListener("change", useFilter);
+filterByCgpa.addEventListener("change", useFilter);
 displayData(users);

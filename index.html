@@ -10,21 +10,22 @@
     <main class="main">
       <div class="filter-container">
         <div>
-            <select id="filterByGender">
-                <option>Select by Gender</option>
-                <option value="male" id="asc">Male</option>
-                <option value="female" id="desc">Female</option>
-            </select>
-        </div>
-        <div >
-            <select id="filterByCgpa">
-                <option>Sort by CGPA</option>
-                <option value="asc" id="asc">Asc</option>
-                <option value="desc" id="desc">Desc</option>
-            </select>
+          <select id="filterByGender">
+            <option disabled>Select by Gender</option>
+            <option value="all" id="all">All</option>
+            <option value="male" id="asc">Male</option>
+            <option value="female" id="desc">Female</option>
+          </select>
         </div>
         <div>
-            <input type="text" id="filterByName" placeholder="Enter your name">
+          <select id="filterByCgpa">
+            <option disabled>Sort by CGPA</option>
+            <option value="asc" id="asc">Asc</option>
+            <option value="desc" id="desc">Desc</option>
+          </select>
+        </div>
+        <div>
+          <input type="text" id="filterByName" placeholder="Enter your name" />
         </div>
       </div>
 
