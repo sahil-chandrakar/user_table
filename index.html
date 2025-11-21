@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Table</title>
+    <link rel="stylesheet" href="assests/css/style.css" />
+  </head>
+  <body>
+    <main class="main">
+      <div class="filter-container">
+        <div>
+            <select id="filterByGender">
+                <option>Select by Gender</option>
+                <option value="male" id="asc">Male</option>
+                <option value="female" id="desc">Female</option>
+            </select>
+        </div>
+        <div >
+            <select id="filterByCgpa">
+                <option>Sort by CGPA</option>
+                <option value="asc" id="asc">Asc</option>
+                <option value="desc" id="desc">Desc</option>
+            </select>
+        </div>
+        <div>
+            <input type="text" id="filterByName" placeholder="Enter your name">
+        </div>
+      </div>
+
+      <table id="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>DOB</th>
+            <th>Address</th>
+            <th>Gender</th>
+            <th>CGPA</th>
+            <th>Course</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <!-- my script started from here  -->
+    <script src="assests/js/app.js"></script>
+  </body>
+</html>
