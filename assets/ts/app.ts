@@ -1,4 +1,18 @@
-const users = [
+// ===============================
+// USER TYPE
+// ===============================
+interface User {
+  Id: number;
+  Name: string;
+  Age: number;
+  DOB: string;
+  Address: string;
+  Gender: string;
+  CGPA: number;
+  Course: string;
+}
+
+const users: User[] = [
   {
     Id: 1,
     Name: "Aarav Sharma",
@@ -201,19 +215,28 @@ const users = [
   },
 ];
 
-const filterByName = document.querySelector("#filterByName");
-const filterByGender = document.querySelector("#filterByGender");
-const filterByCgpa = document.querySelector("#filterByCgpa");
-const prevBtn = document.querySelector("#prevBtn");
-const nextBtn = document.querySelector("#nextBtn");
 
-let currentPage = 1;
-const recordsPerPage = 5;
+// ===============================
+// DOM ELEMENTS (TYPED)
+// ===============================
 
-const useFilter = () => {
-  let result = [...users];
+const filterByName = document.querySelector("#filterByName") as HTMLInputElement;
+const filterByGender = document.querySelector("#filterByGender") as HTMLSelectElement;
+const filterByCgpa = document.querySelector("#filterByCgpa") as HTMLSelectElement;
+const prevBtn = document.querySelector("#prevBtn") as HTMLButtonElement;
+const nextBtn = document.querySelector("#nextBtn") as HTMLButtonElement;
 
-  //filter the data by name
+let currentPage: number = 1;
+let recordsPerPage: number = 5;
+
+
+// ===============================
+// FILTER FUNCTION
+// ===============================
+const useFilter = (): void => {
+  let result: User[] = [...users];
+
+  // filter by name
   const nameValue = filterByName.value.toLowerCase();
   if (nameValue) {
     result = result.filter((user) =>
@@ -221,90 +244,96 @@ const useFilter = () => {
     );
   }
 
-  //filter by gender
+  // filter by gender
   const genderValue = filterByGender.value;
-  //   if (genderValue === "all") {
-  //     result = result;
-  //   } else if (genderValue == "male") {
-  //     result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
-  //   } else {
-  //     result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
-  //   }
   if (genderValue !== "all") {
-    result = result.filter((user) => user.Gender.toLowerCase() === genderValue);
+    result = result.filter(
+      (user) => user.Gender.toLowerCase() === genderValue
+    );
   }
 
-  //filter the data by cgpa
+  // sort by CGPA
   const cgpaValue = filterByCgpa.value;
-  if (cgpaValue == "asc") {
+  if (cgpaValue === "asc") {
     result.sort((a, b) => a.CGPA - b.CGPA);
-  } else if (cgpaValue == "desc") {
+  } else if (cgpaValue === "desc") {
     result.sort((a, b) => b.CGPA - a.CGPA);
   }
 
-  //creating pagination
+  // pagination
   const totalPages = Math.ceil(result.length / recordsPerPage);
-
-  if (currentPage > totalPages) {
-    currentPage = 1;
-  }
+  if (currentPage > totalPages) currentPage = 1;
 
   const start = (currentPage - 1) * recordsPerPage;
   const end = currentPage * recordsPerPage;
+
   const paginatedResult = result.slice(start, end);
 
-  //creating a function for text between prev - next
-  let textData = document.querySelector("#textData");
+  // update page text
+  const textData = document.querySelector("#textData") as HTMLElement;
   textData.innerHTML = `Page ${currentPage} of ${totalPages}`;
 
   displayData(paginatedResult);
   updateButtons(totalPages);
-
-  //   displayData(result);
 };
 
-//disabling buttons
-const updateButtons = (totalPages) => {
+
+// ===============================
+// BUTTON DISABLING
+// ===============================
+const updateButtons = (totalPages: number): void => {
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages;
 };
 
-//next and previous button
+
+// ===============================
+// NEXT & PREV BUTTONS
+// ===============================
 prevBtn.addEventListener("click", () => {
   if (currentPage > 1) {
     currentPage--;
     useFilter();
   }
 });
+
 nextBtn.addEventListener("click", () => {
   currentPage++;
   useFilter();
 });
 
-//display the user data in table
-const displayData = (list) => {
-  const tbody = document.querySelector("#tbody");
+
+// ===============================
+// DISPLAY TABLE
+// ===============================
+const displayData = (list: User[]): void => {
+  const tbody = document.querySelector("#tbody") as HTMLElement;
   tbody.innerHTML = "";
 
   list.forEach((user, index) => {
-    //we have to add the elements instead of assigning directly (#learning 1)
     tbody.innerHTML += `
-        <tr>
-            <td>${index + 1}</td>
-            <td>${user.Name}</td>
-            <td>${user.Age}</td>
-            <td>${user.DOB}</td>
-            <td>${user.Address}</td>
-            <td>${user.Gender}</td>
-            <td>${user.CGPA}</td>
-            <td>${user.Course}</td>
-        </tr>
+      <tr>
+        <td>${index + 1}</td>
+        <td>${user.Name}</td>
+        <td>${user.Age}</td>
+        <td>${user.DOB}</td>
+        <td>${user.Address}</td>
+        <td>${user.Gender}</td>
+        <td>${user.CGPA}</td>
+        <td>${user.Course}</td>
+      </tr>
     `;
   });
 };
 
+
+// ===============================
+// EVENT LISTENERS
+// ===============================
 filterByName.addEventListener("input", useFilter);
 filterByGender.addEventListener("change", useFilter);
 filterByCgpa.addEventListener("change", useFilter);
 
+
+// run once
 useFilter();

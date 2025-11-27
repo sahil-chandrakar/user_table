@@ -1,0 +1,27 @@
+{
+  "name": "user-table",
+  "version": "1.0.0",
+  "description": "A dynamic, interactive student user table application built with vanilla HTML, CSS, and JavaScript. This project displays student information with advanced filtering and sorting capabilities.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahil-chandrakar/user_table.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sahil-chandrakar/user_table/issues"
+  },
+  "homepage": "https://github.com/sahil-chandrakar/user_table#readme",
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^5.9.3"
+  }
+}
